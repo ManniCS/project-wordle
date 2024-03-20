@@ -1,5 +1,7 @@
 import React from "react";
 
+import { MAX_WORD_LENGTH } from "../../constants.js";
+
 function GuessInput({ addGuess }) {
   const [guess, setGuess] = React.useState("");
 
@@ -16,8 +18,8 @@ function GuessInput({ addGuess }) {
         id="guess-input"
         required
         value={guess}
-        maxLength={5}
-        title={`5 letter word`}
+        maxLength={MAX_WORD_LENGTH}
+        title={`${MAX_WORD_LENGTH} letter word`}
         pattern="[A-Z]{5}"
         onChange={(event) => {
           setGuess(event.target.value.toUpperCase());
