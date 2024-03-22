@@ -2,7 +2,7 @@ import React from "react";
 
 import { MAX_WORD_LENGTH } from "../../constants.js";
 
-function GuessInput({ addGuess }) {
+function GuessInput({ gameState, addGuess }) {
   const [guess, setGuess] = React.useState("");
 
   function handleGuess(event) {
@@ -16,6 +16,7 @@ function GuessInput({ addGuess }) {
       <label htmlFor="guess-input">Enter guess:</label>
       <input
         id="guess-input"
+        disabled={gameState === "won" || gameState === "lost"}
         required
         value={guess}
         maxLength={MAX_WORD_LENGTH}

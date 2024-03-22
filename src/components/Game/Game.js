@@ -4,7 +4,12 @@ import { sample } from "../../utils";
 import { WORDS } from "../../data";
 
 import GuessInput from "../GuessInput";
-import GuessList from "../GuessList";
+import ResultsList from "../ResultsList";
+import Banner from "../Banner";
+
+import { checkGuess } from "../../game-helpers.js";
+
+import { MAX_GUESSES } from "../../constants.js";
 
 // Pick a random word on every pageload.
 const answer = sample(WORDS);
@@ -12,17 +17,29 @@ const answer = sample(WORDS);
 console.info({ answer });
 
 function Game() {
-  const [guessList, setGuessList] = React.useState([]);
+  const [results, setResults] = React.useState([]);
+  const [gameState, setGameState] = React.useState("in play");
 
   function addGuess(guess) {
-    const newGuessList = [...guessList, guess];
-    setGuessList(newGuessList);
+    const result = checkGuess(guess, answer);
+    const newResults = [...results, result];
+    setResults(newResults);
+    if (guess === answer) {
+      setGameState("won");
+    } else if (newResults.length >= MAX_GUESSES) {
+      setGameState("lost");
+    }
   }
 
   return (
     <>
-      <GuessList guessList={guessList} answer={answer} />
-      <GuessInput addGuess={addGuess} />
+      <Banner
+        gameState={gameState}
+        answer={answer}
+        numGuesses={results.length}
+      />
+      <ResultsList results={results} />
+      <GuessInput gameState={gameState} addGuess={addGuess} />
     </>
   );
 }

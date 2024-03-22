@@ -3,16 +3,16 @@ import React from "react";
 import { range } from "../../utils.js";
 import { MAX_GUESSES } from "../../constants.js";
 
-import Guess from "../Guess";
+import Result from "../Result/index.js";
 
-function GuessList({ guessList, answer }) {
+function ResultsList({ results }) {
   return (
     <div className="guess-results">
       {range(MAX_GUESSES).map((i) => (
-        <Guess key={i} guess={guessList[i]} answer={answer} />
+        <Result key={i} result={results[i]} />
       ))}
     </div>
   );
 }
 
-export default GuessList;
+export default ResultsList;
